@@ -12,7 +12,7 @@ class Config
     }
     public static function DB_USERNAME ()
     {
-        return Config::get_env("DB_USERNAME", "products_scandiweb");
+        return Config::get_env("DB_USERNAME", "cardiaries");
     }
     public static function DB_PASSWORD ()
     {
@@ -20,7 +20,7 @@ class Config
     }
     public static function DB_SCHEME ()
     {
-        return Config::get_env("DB_SCHEME", "cardiaries");
+        return Config::get_env("DB_SCHEME", "products_scandiweb");
     }
     public static function DB_PORT ()
     {

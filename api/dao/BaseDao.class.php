@@ -40,7 +40,12 @@ class BaseDao
         $this->connection->commit();
     }
 
-    public function parse_order($order)
+    public function deleteBySKU ($skuList) {
+        $query = "DELETE FROM $this->table WHERE SKU IN (:skuList)";
+        $this->query($query, ["skuList" => $skuList]);
+    }
+
+    public function parseOrder($order)
     {
         switch (mb_substr($order, 0, 1)) {
             case '-':
@@ -77,7 +82,7 @@ class BaseDao
         return $entity;
     }
 
-    protected function execute_update($table, $id, $entity, $id_column = "id")
+    protected function executeUpdate($table, $id, $entity, $id_column = "id")
     {
         //generating automated query
         $query = "UPDATE $table SET ";
@@ -103,7 +108,7 @@ class BaseDao
         return $stmt->fetchAll(PDO::FETCH_ASSOC); // PDO::FETCH_ASSOC used to ensure no duplicate elements 
     }
 
-    protected function query_unique($query, $params)
+    protected function queryUnique($query, $params)
     {
         $result = $this->query($query, $params);
         return reset($result); // reset - returns first element of array, checks if null etc. 
@@ -116,19 +121,18 @@ class BaseDao
 
     public function update($id, $entity)
     {
-        $this->execute_update($this->table, $id, $entity);
+        $this->executeUpdate($this->table, $id, $entity);
     }
 
-    public function get_by_id($id)
+    public function getAll($offset = 0, $limit = 25, $order = "-id")
     {
-        return $this->query_unique("SELECT * FROM " . $this->table . " WHERE id = :id", ["id" => $id]);
-    }
-
-    public function get_all($offset = 0, $limit = 25, $order = "-id")
-    {
-        list($order_column, $order_direction) = $this->parse_order($order);
+        list($order_column, $order_direction) = $this->parseOrder($order);
         return $this->query("SELECT * FROM " . $this->table . "
                             ORDER BY $order_column $order_direction 
                             LIMIT $limit OFFSET $offset", []);
+    }
+
+    public function getAllProducts () {
+        return $this->query("SELECT * FROM " . $this->table, []);
     }
 }
