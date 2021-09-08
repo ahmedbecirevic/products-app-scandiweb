@@ -1,8 +1,10 @@
+import MainHeader from './components/MainHeader/MainHeader';
+
 function App() {
   return (
-    <div>
-      <h2>Hello world!</h2>
-    </div>
+    <>
+      <MainHeader />
+    </>
   );
 }
 
