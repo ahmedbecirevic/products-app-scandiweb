@@ -6,19 +6,22 @@ error_reporting(E_ALL);
 require_once dirname(__FILE__) . "/services/ProductService.class.php";
 require_once dirname(__FILE__) . "/routes/Route.class.php";
 require_once dirname(__FILE__) . "/Utils.class.php";
+require_once dirname(__FILE__) . "/config.php";
 
+header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+header('Access-Control-Allow-Credentials: true');
+header('Access-Control-Max-Age: 86400');
 
-// echo json_encode($test->getAll(), JSON_PRETTY_PRINT);
-
-// Route::add('/', function() {
-//   echo '<form method="post"><input type="text" name="test" /><input type="submit" value="send" /></form>';
-// });
 
 // var_dump(parse_url($_SERVER['REQUEST_URI']));
 $productsService = new ProductService();
 
+// var_dump($_SERVER['SCRIPT_NAME']);
+// var_dump($_SERVER['SERVER_NAME']);
+// echo Config::PROTOCOL();
 
-//gets all products
+
+// gets all products
 Route::add('/products', function () {
   global $productsService;
   echo json_encode($productsService->getAll(), JSON_PRETTY_PRINT);
@@ -35,5 +38,11 @@ Route::add('/products/([A-Z]+[0-9]+)', function ($SKU) {
   echo $SKU;
 }, 'delete');
 
-Route::run('/products-app-scandiweb/api');
+$path = '/api';
+
+if (Config::SERVER_NAME() == 'localhost') {
+  $path = '/products-app-scandiweb/api';
+}
+
+Route::run($path);
 ?>
