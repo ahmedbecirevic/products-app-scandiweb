@@ -36,6 +36,10 @@ class Config
         return strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,strpos( $_SERVER["SERVER_PROTOCOL"],'/'))).'://';
     }
 
+    public static function SERVER_NAME () {
+        return $_SERVER['SERVER_NAME'];
+    }
+
     public static function get_env($name, $default)
     {
         return isset($_ENV[$name]) && trim($_ENV[$name]) != '' ? $_ENV[$name] : $default;
