@@ -7,4 +7,12 @@ class ProductService extends BaseService {
   {
     $this->dao = new ProductDao();
   }
+
+  public function getAllProducts () {
+    return $this->dao->getAllProducts();
+  }
+
+  public function addProduct ($product) {
+    return $this->dao->addProduct($product);
+  }
 }

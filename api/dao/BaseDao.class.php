@@ -131,8 +131,4 @@ class BaseDao
                             ORDER BY $order_column $order_direction 
                             LIMIT $limit OFFSET $offset", []);
     }
-
-    public function getAllProducts () {
-        return $this->query("SELECT * FROM " . $this->table, []);
-    }
 }

@@ -24,13 +24,13 @@ $productsService = new ProductService();
 // gets all products
 Route::add('/products', function () {
   global $productsService;
-  echo json_encode($productsService->getAll(), JSON_PRETTY_PRINT);
+  echo json_encode($productsService->getAllProducts(), JSON_PRETTY_PRINT);
 });
 
 //add new product
 Route::add('/products', function () {
   global $productsService;
-  echo json_encode($productsService->add(Utils::postRequest())); // get the data from body
+  echo json_encode($productsService->addProduct(Utils::postRequest())); // get the data from body
 }, 'post');
 
 

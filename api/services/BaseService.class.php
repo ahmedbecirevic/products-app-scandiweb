@@ -12,7 +12,4 @@ class BaseService
     //     return $this->dao->get_by_id($id);
     // }
 
-    public function getAll() {
-      return $this->dao->getAllProducts();
-    }
 }
