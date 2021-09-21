@@ -1,0 +1,11 @@
+.button {
+  font: inherit;
+  background: rgb(81, 151, 216);
+  border: 1px solid #000000;
+  padding: 0.5rem 1.5rem;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
+  border-radius: 14px;
+  margin: 0.5rem;
+}
