@@ -1,8 +1,8 @@
 <?php
 require_once dirname(__FILE__) . "/BaseDao.class.php";
 
-class DimensionsProductDao extends BaseDao {
+class DVDDao extends BaseDao {
     public function __construct() {
-        parent::__construct("dimensions_products");
+        parent::__construct("dvds");
     }
 }

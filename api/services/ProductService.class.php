@@ -1,18 +1,18 @@
 <?php
 require_once dirname(__FILE__) . '/BaseService.class.php';
 require_once dirname(__FILE__) . '/../dao/ProductDao.class.php';
-require_once dirname(__FILE__) . '/../dao/DimensionsProductDao.class.php';
-require_once dirname(__FILE__) . '/../dao/SizeProductDao.class.php';
-require_once dirname(__FILE__) . '/../dao/WeightProductDao.class.php';
+require_once dirname(__FILE__) . '/../dao/FurnitureDao.class.php';
+require_once dirname(__FILE__) . '/../dao/DVDDao.class.php';
+require_once dirname(__FILE__) . '/../dao/BookDao.class.php';
 
 
 class ProductService extends BaseService {
   public function __construct ()
   {
     $this->dao = new ProductDao();
-    $this->weightProduct = new WeightProductDao();
-    $this->sizeProduct = new SizeProductDao();
-    $this->dimensionsProduct = new DimensionsProductDao();
+    $this->bookDao = new BookDao();
+    $this->dvdDao = new DVDDao();
+    $this->furnitureDao = new FurnitureDao();
   }
 
   public function getAllProducts () {
@@ -25,7 +25,7 @@ class ProductService extends BaseService {
       $this->dao->beginTransaction();
 
       if (array_key_exists("height", $product)) {
-        $dimProd = $this->dimensionsProduct->add([
+        $dimProd = $this->furnitureDao->add([
           'SKU' => $product['SKU'],
           'height' => $product['height'],
           'width' => $product['width'],
@@ -34,14 +34,14 @@ class ProductService extends BaseService {
       }
 
       if (array_key_exists("size", $product)) {
-        $sizeProd = $this->sizeProduct->add([
+        $sizeProd = $this->dvdDao->add([
           'SKU' => $product['SKU'],
           'size' => $product['size']
         ]);
       }
 
       if (array_key_exists("weight", $product)) {
-        $sizeProd = $this->sizeProduct->add([
+        $sizeProd = $this->bookDao->add([
           'SKU' => $product['SKU'],
           'weight' => $product['weight']
         ]);
