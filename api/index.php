@@ -33,6 +33,11 @@ Route::add('/products', function () {
   echo json_encode($productsService->addProduct(Utils::postRequest())); // get the data from body
 }, 'post');
 
+//delete products
+Route::add('/products', function () {
+  global $productsService;
+  echo json_encode($productsService->deleteProducts(array_values(Utils::postRequest())));
+}, 'delete');
 
 Route::add('/products/([A-Z]+[0-9]+)', function ($SKU) {
   echo $SKU;

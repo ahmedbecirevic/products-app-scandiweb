@@ -5,7 +5,6 @@ require_once dirname(__FILE__) . '/../dao/FurnitureDao.class.php';
 require_once dirname(__FILE__) . '/../dao/DVDDao.class.php';
 require_once dirname(__FILE__) . '/../dao/BookDao.class.php';
 
-
 class ProductService extends BaseService {
   public function __construct ()
   {
@@ -63,5 +62,9 @@ class ProductService extends BaseService {
     return $product;
   }
   
+  //delete products, args passed an array of SKU
+  public function deleteProducts ($listOfSKU) {
+    return $this->dao->deleteProducts($listOfSKU);
+  }
   
 }
