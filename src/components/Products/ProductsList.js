@@ -12,12 +12,14 @@ const ProductsList = () => {
 
     const getProducts = () => {
       axios
-        .get(`${REACT_APP_HOST}api/products`)
+        .get(`${REACT_APP_HOST}api/products`, { cancelToken: source.token })
         .then(data => {
           setProducts(data.data);
         })
-        .catch(e => {
-          console.log(e);
+        .catch(error => {
+          if (!axios.isCancel(error)) {
+            console.log(error);
+          }
         });
     };
 
@@ -25,7 +27,6 @@ const ProductsList = () => {
 
     // CLean up function to ensure no state update on unmounted components
     return () => {
-      setProducts([]);
       source.cancel();
     };
   }, [REACT_APP_HOST]);
