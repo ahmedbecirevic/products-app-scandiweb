@@ -36,7 +36,9 @@ Route::add('/products', function () {
 //delete products
 Route::add('/products', function () {
   global $productsService;
-  echo json_encode($productsService->deleteProducts(array_values(Utils::postRequest())));
+  // echo json_encode($productsService->deleteProducts(array_values(Utils::postRequest())));
+  echo json_encode($productsService->deleteProducts(Utils::postRequest()['SKU']));
+  // var_dump(json_decode(file_get_contents('php://input')));
 }, 'delete');
 
 Route::add('/products/([A-Z]+[0-9]+)', function ($SKU) {

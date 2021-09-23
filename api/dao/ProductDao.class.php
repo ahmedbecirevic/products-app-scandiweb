@@ -17,7 +17,7 @@ class ProductDao extends BaseDao {
     public function deleteProducts ($listOfSKU) {
         $query = "DELETE FROM products WHERE SKU IN (";
         foreach ($listOfSKU as $SKU) {
-        $query .= '"' . $SKU . '"' . ", ";
+            $query .= '"' . $SKU . '"' . ", ";
         }
         $query = substr($query, 0, -2);
         $query .= ")";
