@@ -1,10 +1,13 @@
 import Navigation from './Navigation';
 import classes from './MainHeader.module.css';
+import { Link } from 'react-router-dom';
 
 const MainHeader = props => {
   return (
     <header className={classes['main-header']}>
-      <h1>Products</h1>
+      <Link to='/'>
+        <h1>Products</h1>
+      </Link>
       <Navigation />
     </header>
   );
