@@ -9,9 +9,7 @@ const Navigation = () => {
         <Link to='/add-product'>
           <Button id='add-product-btn'>Add</Button>
         </Link>
-        <Button id='delete-product-btn' className={classes['delete-button']}>
-          Delete
-        </Button>
+        <Button id={classes['delete-product-btn']}>Delete</Button>
       </ul>
     </nav>
   );
