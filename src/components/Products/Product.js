@@ -1,16 +1,32 @@
-import { useState } from 'react';
+import { useRef } from 'react';
+import ProductsContext from '../../store/products-context';
 import { Card } from 'react-bootstrap';
-import Checkbox from '../UI/Checkbox';
 import classes from './Product.module.css';
+import { useContext } from 'react';
 
 const Product = ({ product }) => {
-  const [isChecked, setIsChecked] = useState(false);
-  const checkedHandler = () => setIsChecked(!isChecked);
+  const { addProductToDelete, removeProductFromDelete } =
+    useContext(ProductsContext);
+  const checkboxRef = useRef();
+
+  const checkedHandler = () => {
+    if (checkboxRef.current.checked) {
+      addProductToDelete(product.SKU);
+    }
+    if (!checkboxRef.current.checked) {
+      removeProductFromDelete(product.SKU);
+    }
+  };
 
   return (
     <div className='card-columns'>
       <Card className={`${classes.card}`}>
-        <Checkbox checked={isChecked} onChange={checkedHandler} />
+        <input
+          type='checkbox'
+          ref={checkboxRef}
+          // checked={isChecked}
+          onChange={checkedHandler}
+        />
         <Card.Body>
           <Card.Text>{product.SKU}</Card.Text>
           <Card.Text>{product.price}</Card.Text>
