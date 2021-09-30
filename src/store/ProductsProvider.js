@@ -11,6 +11,7 @@ const ProductsProvider = props => {
 
   // delete products
   const deleteProductsHandler = useCallback(() => {
+    // ensure the data is sent in right form to API
     const properFormForDeletion = {
       SKU: productsToDelete,
     };
@@ -18,10 +19,18 @@ const ProductsProvider = props => {
     axios
       .post(`${REACT_APP_HOST}api/products/delete`, properFormForDeletion)
       .then(() => {
-        setProducts(prevState => []);
+        const deleted = productsToDelete;
+        // remove deleted products from current products state
+        setProducts(prevState => {
+          const filteredProducts = prevState.filter(
+            product => !deleted.includes(product.SKU)
+          );
+          return filteredProducts;
+        });
+        // set the deletion array to empty
         setProductsToDelete(prevState => []);
       });
-  }, [productsToDelete, REACT_APP_HOST]);
+  }, [REACT_APP_HOST, productsToDelete]);
 
   // fetch products
   useEffect(() => {
@@ -46,7 +55,7 @@ const ProductsProvider = props => {
     return () => {
       source.cancel();
     };
-  }, [REACT_APP_HOST, products]);
+  }, [REACT_APP_HOST]);
 
   // add product SKU to deletion list
   const addProductToDeleteHandler = SKU => {
