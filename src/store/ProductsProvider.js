@@ -8,6 +8,7 @@ const ProductsProvider = props => {
   const { REACT_APP_HOST } = process.env;
   const [productsToDelete, setProductsToDelete] = useState(PROD_ARRAY);
   const [products, setProducts] = useState([]);
+  const [isDeleteDisabled, setIsDeleteDisabled] = useState(false);
 
   // delete products
   const deleteProductsHandler = useCallback(() => {
@@ -16,20 +17,27 @@ const ProductsProvider = props => {
       SKU: productsToDelete,
     };
 
-    axios
-      .post(`${REACT_APP_HOST}api/products/delete`, properFormForDeletion)
-      .then(() => {
-        const deleted = productsToDelete;
-        // remove deleted products from current products state
-        setProducts(prevState => {
-          const filteredProducts = prevState.filter(
-            product => !deleted.includes(product.SKU)
-          );
-          return filteredProducts;
+    if (productsToDelete.length > 0) {
+      // disable delete button
+      setIsDeleteDisabled(true);
+
+      // make a http req to API
+      axios
+        .post(`${REACT_APP_HOST}api/products/delete`, properFormForDeletion)
+        .then(() => {
+          const deleted = productsToDelete;
+          // remove deleted products from current products state
+          setProducts(prevState => {
+            const filteredProducts = prevState.filter(
+              product => !deleted.includes(product.SKU)
+            );
+            return filteredProducts;
+          });
+          // set the deletion array to empty
+          setProductsToDelete(prevState => []);
+          setIsDeleteDisabled(false);
         });
-        // set the deletion array to empty
-        setProductsToDelete(prevState => []);
-      });
+    }
   }, [REACT_APP_HOST, productsToDelete]);
 
   // fetch products
@@ -75,6 +83,7 @@ const ProductsProvider = props => {
   const productsContext = {
     products: products,
     listProdToDelete: productsToDelete,
+    deleteDisabled: isDeleteDisabled,
     addProductToDelete: addProductToDeleteHandler,
     removeProductFromDelete: removeProductFromDeleteHandler,
     deleteProducts: deleteProductsHandler,

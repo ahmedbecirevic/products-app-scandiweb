@@ -7,6 +7,7 @@ import { useContext } from 'react';
 const Navigation = () => {
   const productsCtx = useContext(ProductsContext);
 
+
   const deleteProductsHandler = () => {
     productsCtx.deleteProducts();
   };
@@ -18,6 +19,7 @@ const Navigation = () => {
           <Button id='add-product-btn'>Add</Button>
         </Link>
         <Button
+          disabled={productsCtx.deleteDisabled}
           onClick={deleteProductsHandler}
           id={classes['delete-product-btn']}
         >
