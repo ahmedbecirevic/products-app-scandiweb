@@ -4,6 +4,9 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require_once dirname(__FILE__) . "/services/ProductService.class.php";
+require_once dirname(__FILE__) . "/services/BookService.class.php";
+require_once dirname(__FILE__) . "/services/DVDService.class.php";
+require_once dirname(__FILE__) . "/services/FurnitureService.class.php";
 require_once dirname(__FILE__) . "/routes/Route.class.php";
 require_once dirname(__FILE__) . "/Utils.class.php";
 require_once dirname(__FILE__) . "/config.php";
@@ -14,6 +17,9 @@ Cors::cors();
   
 // define instance of ProductService class
 $productsService = new ProductService();
+$bookService = new BookService();
+$dvdService = new DVDService();
+$furnitureService = new FurnitureService();
 
 // base route for API
 Route::add('/', function () {
@@ -24,6 +30,24 @@ Route::add('/', function () {
 Route::add('/products', function () {
   global $productsService;
   echo json_encode($productsService->getAllProducts(), JSON_PRETTY_PRINT);
+});
+
+//  fetch all books
+Route::add('/products/books/', function () {
+  global $bookService;
+  echo json_encode($bookService->getBooks(), JSON_PRETTY_PRINT);
+});
+
+//  fetch all DVDs
+Route::add('/products/dvds/', function () {
+  global $dvdService;
+  echo json_encode($dvdService->getDVDs(), JSON_PRETTY_PRINT);
+});
+
+//  fetch all furniture
+Route::add('/products/furniture/', function () {
+  global $furnitureService;
+  echo json_encode($furnitureService->getFurniture(), JSON_PRETTY_PRINT);
 });
 
 //add new product
