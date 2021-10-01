@@ -6,7 +6,7 @@ const MainHeader = props => {
   return (
     <header className={classes['main-header']}>
       <Link to='/'>
-        <h1>Products</h1>
+        <h1>Product List</h1>
       </Link>
       <Navigation />
     </header>

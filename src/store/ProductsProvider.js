@@ -2,13 +2,64 @@ import axios from 'axios';
 import { useCallback, useState, useEffect } from 'react';
 import ProductsContext from './products-context';
 
+const useGetProductTypes = endpoint => {
+  const [response, setResponse] = useState([]);
+  const [error, setError] = useState('');
+  const source = axios.CancelToken.source();
+
+  const fetchData = () => {
+    axios
+      .get(endpoint, {
+        cancelToken: source.token,
+      })
+      .then(res => {
+        setResponse(res.data);
+      })
+      .catch(err => {
+        setError(err);
+      });
+  };
+
+  useEffect(() => {
+    fetchData();
+    return () => source.cancel();
+  }, []);
+
+  return response;
+};
+
 const PROD_ARRAY = [];
 
 const ProductsProvider = props => {
   const { REACT_APP_HOST } = process.env;
+
+  const fetchedBooks = useGetProductTypes(
+    `${REACT_APP_HOST}api/products/books`
+  );
+  const fetchedDvds = useGetProductTypes(`${REACT_APP_HOST}api/products/dvds`);
+  const fetchedFurniture = useGetProductTypes(
+    `${REACT_APP_HOST}api/products/furniture`
+  );
+
   const [productsToDelete, setProductsToDelete] = useState(PROD_ARRAY);
-  const [products, setProducts] = useState([]);
   const [isDeleteDisabled, setIsDeleteDisabled] = useState(false);
+
+  const [products, setProducts] = useState([]);
+  const [books, setBooks] = useState([]);
+  const [furniture, setFurniture] = useState([]);
+  const [dvds, setDvds] = useState([]);
+
+  useEffect(() => {
+    setBooks(fetchedBooks);
+  }, [fetchedBooks]);
+
+  useEffect(() => {
+    setDvds(fetchedDvds);
+  }, [fetchedDvds]);
+
+  useEffect(() => {
+    setFurniture(fetchedFurniture);
+  }, [fetchedFurniture]);
 
   // delete products
   const deleteProductsHandler = useCallback(() => {
@@ -36,7 +87,8 @@ const ProductsProvider = props => {
           // set the deletion array to empty
           setProductsToDelete(prevState => []);
           setIsDeleteDisabled(false);
-        });
+        })
+        .catch(err => console.log(err));
     }
   }, [REACT_APP_HOST, productsToDelete]);
 
@@ -46,7 +98,9 @@ const ProductsProvider = props => {
 
     const getProducts = () => {
       axios
-        .get(`${REACT_APP_HOST}api/products`, { cancelToken: source.token })
+        .get(`${REACT_APP_HOST}api/products`, {
+          cancelToken: source.token,
+        })
         .then(data => {
           setProducts(data.data);
         })
@@ -82,6 +136,9 @@ const ProductsProvider = props => {
 
   const productsContext = {
     products: products,
+    books: books,
+    furniture: furniture,
+    dvds: dvds,
     listProdToDelete: productsToDelete,
     deleteDisabled: isDeleteDisabled,
     addProductToDelete: addProductToDeleteHandler,

@@ -13,7 +13,7 @@ function App() {
         <main>
           <Switch>
             <Route exact component={ProductsList} path='/' />
-            <Route exact component={Form} path='/add-product' />
+            <Route exact component={Form} path='/addproduct' />
           </Switch>
         </main>
       </ProductsProvider>

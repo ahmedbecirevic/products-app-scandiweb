@@ -4,11 +4,11 @@ import classes from './ProductsList.module.css';
 import ProductsContext from '../../store/products-context';
 
 const ProductsList = () => {
-  const { products } = useContext(ProductsContext);
+  const productsCtx = useContext(ProductsContext);
 
   return (
     <div className={`${classes['products-list']}`}>
-      {products.map(product => {
+      {productsCtx.products.map(product => {
         return <Product key={product.SKU} product={product} />;
       })}
     </div>

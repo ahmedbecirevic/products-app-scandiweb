@@ -15,7 +15,7 @@ const Navigation = () => {
   return (
     <nav className={classes.nav}>
       <ul>
-        <Link to='/add-product'>
+        <Link to='/addproduct'>
           <Button id='add-product-btn'>Add</Button>
         </Link>
         <Button
