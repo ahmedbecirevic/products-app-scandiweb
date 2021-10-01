@@ -33,19 +33,19 @@ Route::add('/products', function () {
 });
 
 //  fetch all books
-Route::add('/products/books/', function () {
+Route::add('/products/books', function () {
   global $bookService;
   echo json_encode($bookService->getBooks(), JSON_PRETTY_PRINT);
 });
 
 //  fetch all DVDs
-Route::add('/products/dvds/', function () {
+Route::add('/products/dvds', function () {
   global $dvdService;
   echo json_encode($dvdService->getDVDs(), JSON_PRETTY_PRINT);
 });
 
 //  fetch all furniture
-Route::add('/products/furniture/', function () {
+Route::add('/products/furniture', function () {
   global $furnitureService;
   echo json_encode($furnitureService->getFurniture(), JSON_PRETTY_PRINT);
 });
