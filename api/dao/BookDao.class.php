@@ -5,4 +5,8 @@ class BookDao extends BaseDao {
     public function __construct() {
         parent::__construct("books");
     }
+
+    public function getBooks () {
+        return $this->query("SELECT * FROM books", []);
+    }
 }

@@ -5,4 +5,8 @@ class FurnitureDao extends BaseDao {
     public function __construct() {
         parent::__construct("furniture");
     }
+
+    public function getFurniture () {
+        return $this->query("SELECT * FROM furniture", []);
+    }
 }

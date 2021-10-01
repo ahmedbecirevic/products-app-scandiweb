@@ -5,4 +5,8 @@ class DVDDao extends BaseDao {
     public function __construct() {
         parent::__construct("dvds");
     }
+
+    public function getDVDs () {
+        return $this->query("SELECT * FROM dvds", []);
+    }
 }
