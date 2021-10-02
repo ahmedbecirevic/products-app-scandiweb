@@ -59,6 +59,7 @@ const NewProduct = () => {
         <Input label='SKU' id='sku' />
         <Input label='Name' id='name' />
         <Input label='Price ($)' id='price' />
+        <label htmlFor='productType'>Type Switcher</label>
         <select
           onChange={productTypeHandler}
           id='productType'

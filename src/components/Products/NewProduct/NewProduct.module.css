@@ -30,3 +30,20 @@
   line-height: 1.1;
   background-color: #fff;
 }
+
+.new-product label {
+  font-weight: bold;
+  flex: 1;
+  color: #464646;
+  margin-bottom: 0.5rem;
+}
+
+.new-product select {
+  width: 100%;
+  float: right;
+  flex: 3;
+  font: inherit;
+  padding: 0.35rem 0.35rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
