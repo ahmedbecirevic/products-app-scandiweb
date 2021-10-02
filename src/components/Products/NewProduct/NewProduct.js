@@ -3,6 +3,9 @@ import Input from '../../UI/Input/Input';
 import Card from '../../UI/Card/Card';
 import Button from '../../UI/Button/Button';
 import classes from './NewProduct.module.css';
+import Dvd from './ProductTypes/Dvd';
+import Book from './ProductTypes/Book';
+import Furniture from './ProductTypes/Furniture';
 
 const productFormReducer = (state, action) => {};
 
@@ -23,9 +26,22 @@ const NewProduct = () => {
       isTypeValid: undefined,
     }
   );
+
   // handle dropdown product type selection
   const productTypeHandler = event => {
-    setProductType(event.target.value);
+    switch (event.target.value) {
+      case 'DVD':
+        setProductType(<Dvd />);
+        break;
+      case 'BOOK':
+        setProductType(<Book />);
+        break;
+      case 'FURN':
+        setProductType(<Furniture />);
+        break;
+      default:
+        break;
+    }
   };
 
   // handle form submission func
@@ -40,23 +56,28 @@ const NewProduct = () => {
   return (
     <Card className={classes['new-product']}>
       <form onSubmit={submitHandler}>
-        <Input label='SKU' id='sku'></Input>
-        <Input label='Name' id='name'></Input>
-        <Input label='Price ($)' id='price'></Input>
-        <div>
-          <select
-            onChange={productTypeHandler}
-            id='productType'
-            className={classes['type-select']}
-          >
-            <option value='' style={{ display: 'none' }}>
-              Product Type
-            </option>
-            <option value='FURN'>Furniture</option>
-            <option value='DVD'>DVD</option>
-            <option value='BOOK'>Book</option>
-          </select>
-        </div>
+        <Input label='SKU' id='sku' />
+        <Input label='Name' id='name' />
+        <Input label='Price ($)' id='price' />
+        <select
+          onChange={productTypeHandler}
+          id='productType'
+          className={classes['type-select']}
+        >
+          <option value='' style={{ display: 'none' }}>
+            Product Type
+          </option>
+          <option id='Furniture' value='FURN'>
+            Furniture
+          </option>
+          <option id='DVD' value='DVD'>
+            DVD
+          </option>
+          <option id='Book' value='BOOK'>
+            Book
+          </option>
+        </select>
+        {productType}
         <div className={classes.actions}>
           <Button type='submit' className={classes['btn-add']}>
             Add Product
