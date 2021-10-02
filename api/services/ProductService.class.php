@@ -49,7 +49,9 @@ class ProductService extends BaseService {
       $product = $this->dao->add([
         'SKU' => $product['SKU'], 
         'name' => $product['name'],
-        'price' => $product['price']
+        'price' => $product['price'],
+        'prod_attribute' => $product['prod_attribute'],
+        'type' => $product['type']
       ]);
       // if all clears commit 
       $this->dao->commit();
