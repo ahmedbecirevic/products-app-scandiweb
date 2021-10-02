@@ -8,13 +8,17 @@ const PROD_TYPES = { FURN: 'Dimension', DVD: 'Size', BOOK: 'Weight' };
 const PROD_UNITS = { FURN: '', DVD: 'MB', BOOK: 'KG' };
 
 const Product = ({ product }) => {
+  // get the needed functions for product deletion from context
   const { addProductToDelete, removeProductFromDelete } =
     useContext(ProductsContext);
   const checkboxRef = useRef();
+
+  // format the product
   const productAttribute = `${PROD_TYPES[product.type]}: ${
     product.prod_attribute
   }${PROD_UNITS[product.type]}`;
 
+  // handle checkbox on/off
   const checkedHandler = () => {
     if (checkboxRef.current.checked) {
       addProductToDelete(product.SKU);
