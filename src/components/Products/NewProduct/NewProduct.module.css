@@ -1,0 +1,32 @@
+.new-product {
+  width: 90%;
+  max-width: 40rem;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+.actions {
+  text-align: center;
+  margin-top: 0.6rem;
+}
+
+.btn-add {
+  background: rgb(42, 180, 150);
+}
+
+.btn-cancel {
+  background: rgb(112, 116, 114);
+}
+
+.type-select {
+  width: 100%;
+  min-width: 15ch;
+  max-width: 30ch;
+  border: 1px solid #777;
+  border-radius: 0.25em;
+  padding: 0.25em 0.5em;
+  font-size: 1.25rem;
+  cursor: pointer;
+  line-height: 1.1;
+  background-color: #fff;
+}

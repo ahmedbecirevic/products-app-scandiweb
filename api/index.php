@@ -64,10 +64,6 @@ Route::add('/products/delete', function () {
   
 }, 'post');
 
-Route::add('/products/([A-Z]+[0-9]+)', function ($SKU) {
-  echo $SKU;
-}, 'delete');
-
 $path = '/products-app-scandiweb/api';
 
 // if (Config::SERVER_NAME() == 'localhost') {

@@ -33,33 +33,33 @@ const PROD_ARRAY = [];
 const ProductsProvider = props => {
   const { REACT_APP_HOST } = process.env;
 
-  const fetchedBooks = useGetProductTypes(
-    `${REACT_APP_HOST}api/products/books`
-  );
-  const fetchedDvds = useGetProductTypes(`${REACT_APP_HOST}api/products/dvds`);
-  const fetchedFurniture = useGetProductTypes(
-    `${REACT_APP_HOST}api/products/furniture`
-  );
+  // const fetchedBooks = useGetProductTypes(
+  //   `${REACT_APP_HOST}api/products/books`
+  // );
+  // const fetchedDvds = useGetProductTypes(`${REACT_APP_HOST}api/products/dvds`);
+  // const fetchedFurniture = useGetProductTypes(
+  //   `${REACT_APP_HOST}api/products/furniture`
+  // );
 
   const [productsToDelete, setProductsToDelete] = useState(PROD_ARRAY);
   const [isDeleteDisabled, setIsDeleteDisabled] = useState(false);
 
   const [products, setProducts] = useState([]);
-  const [books, setBooks] = useState([]);
-  const [furniture, setFurniture] = useState([]);
-  const [dvds, setDvds] = useState([]);
+  // const [books, setBooks] = useState([]);
+  // const [furniture, setFurniture] = useState([]);
+  // const [dvds, setDvds] = useState([]);
 
-  useEffect(() => {
-    setBooks(fetchedBooks);
-  }, [fetchedBooks]);
+  // useEffect(() => {
+  //   setBooks(fetchedBooks);
+  // }, [fetchedBooks]);
 
-  useEffect(() => {
-    setDvds(fetchedDvds);
-  }, [fetchedDvds]);
+  // useEffect(() => {
+  //   setDvds(fetchedDvds);
+  // }, [fetchedDvds]);
 
-  useEffect(() => {
-    setFurniture(fetchedFurniture);
-  }, [fetchedFurniture]);
+  // useEffect(() => {
+  //   setFurniture(fetchedFurniture);
+  // }, [fetchedFurniture]);
 
   // delete products
   const deleteProductsHandler = useCallback(() => {
@@ -136,9 +136,6 @@ const ProductsProvider = props => {
 
   const productsContext = {
     products: products,
-    books: books,
-    furniture: furniture,
-    dvds: dvds,
     listProdToDelete: productsToDelete,
     deleteDisabled: isDeleteDisabled,
     addProductToDelete: addProductToDeleteHandler,

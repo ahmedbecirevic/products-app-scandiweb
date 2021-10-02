@@ -7,6 +7,7 @@ const Button = props => {
       className={`${classes.button} ${props.className ? props.className : ''}`}
       id={props.id}
       disabled={props.disabled}
+      type={props.type}
     >
       {props.children}
     </button>
