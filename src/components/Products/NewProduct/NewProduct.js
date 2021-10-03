@@ -1,4 +1,4 @@
-import { useState, useReducer } from 'react';
+import { useState } from 'react';
 import Input from '../../UI/Input/Input';
 import Card from '../../UI/Card/Card';
 import Button from '../../UI/Button/Button';
@@ -7,25 +7,22 @@ import Dvd from './ProductTypes/Dvd';
 import Book from './ProductTypes/Book';
 import Furniture from './ProductTypes/Furniture';
 
-const productFormReducer = (state, action) => {};
-
 const NewProduct = () => {
   const [formIsValid, setFormIsValid] = useState(false);
+  const [name, setName] = useState('');
+  const [sku, setSku] = useState('');
+  const [price, setPrice] = useState('');
   const [productType, setProductType] = useState(undefined);
-  const [productFormState, dispatchProductForm] = useReducer(
-    productFormReducer,
-    {
-      sku: '',
-      name: '',
-      price: '',
-      type: '',
-      attribute: '',
-      isSkuValid: undefined,
-      isNameValid: undefined,
-      isPriceValid: undefined,
-      isTypeValid: undefined,
-    }
-  );
+
+  const skuChangeHandler = event => {
+    setSku(event.target.value);
+  };
+  const nameChangeHandler = event => {
+    setName(event.target.value);
+  };
+  const priceChangeHandler = event => {
+    setPrice(event.target.value);
+  };
 
   // handle dropdown product type selection
   const productTypeHandler = event => {
@@ -47,18 +44,38 @@ const NewProduct = () => {
   // handle form submission func
   const submitHandler = event => {
     event.preventDefault();
-    console.log('hello');
     if (formIsValid) {
       // pass the data from reducer to API and ctx
     }
+    setSku('');
+    setName('');
+    setPrice('');
   };
 
   return (
     <Card className={classes['new-product']}>
       <form onSubmit={submitHandler}>
-        <Input label='SKU' id='sku' />
-        <Input label='Name' id='name' />
-        <Input label='Price ($)' id='price' />
+        <Input
+          type='text'
+          label='SKU'
+          id='sku'
+          onChange={skuChangeHandler}
+          value={sku}
+        />
+        <Input
+          type='text'
+          label='Name'
+          id='name'
+          onChange={nameChangeHandler}
+          value={name}
+        />
+        <Input
+          type='text'
+          label='Price ($)'
+          id='price'
+          onChange={priceChangeHandler}
+          value={price}
+        />
         <label htmlFor='productType'>Type Switcher</label>
         <select
           onChange={productTypeHandler}
@@ -78,7 +95,7 @@ const NewProduct = () => {
             Book
           </option>
         </select>
-        {productType}
+        <Card>{productType}</Card>
         <div className={classes.actions}>
           <Button type='submit' className={classes['btn-add']}>
             Add Product
