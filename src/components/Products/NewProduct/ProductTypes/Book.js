@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Input from '../../../UI/Input/Input';
 
-const Book = ({ checkIsValid }) => {
+const Book = ({ checkIsValid, onInvalid }) => {
   const [book, setBook] = useState('');
 
   const bookChangeHandler = event => {
@@ -18,6 +18,9 @@ const Book = ({ checkIsValid }) => {
       id='weight'
       type='text'
       label='Weight (KG)'
+      value={book}
+      pattern='[a-zA-Z0-9-]+'
+      onInvalid={onInvalid}
     />
   );
 };

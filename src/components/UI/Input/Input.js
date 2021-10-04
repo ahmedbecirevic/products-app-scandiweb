@@ -9,6 +9,8 @@ const Input = props => {
     >
       <label htmlFor={props.id}>{props.label}</label>
       <input
+        onInvalid={props.onInvalid}
+        pattern={props.pattern}
         type={props.type}
         id={props.id}
         value={props.value}

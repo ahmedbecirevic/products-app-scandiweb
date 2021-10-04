@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Input from '../../../UI/Input/Input';
 
-const Dvd = ({ checkIsValid }) => {
+const Dvd = ({ checkIsValid, onInvalid }) => {
   const [dvd, setDvd] = useState('');
 
   const dvdChangeHandler = event => {
@@ -18,6 +18,9 @@ const Dvd = ({ checkIsValid }) => {
       id='size'
       type='text'
       label='Size (MB)'
+      value={dvd}
+      pattern='[a-zA-Z0-9-]+'
+      onInvalid={onInvalid}
     />
   );
 };

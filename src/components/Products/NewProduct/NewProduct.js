@@ -31,13 +31,28 @@ const NewProduct = () => {
   const productTypeHandler = event => {
     switch (event.target.value) {
       case 'DVD':
-        setProductType(<Dvd checkIsValid={productTypeValidHandler} />);
+        setProductType(
+          <Dvd
+            checkIsValid={productTypeValidHandler}
+            onInvalid={invalidInputMessageHandler}
+          />
+        );
         break;
       case 'BOOK':
-        setProductType(<Book checkIsValid={productTypeValidHandler} />);
+        setProductType(
+          <Book
+            checkIsValid={productTypeValidHandler}
+            onInvalid={invalidInputMessageHandler}
+          />
+        );
         break;
       case 'FURN':
-        setProductType(<Furniture checkIsValid={productTypeValidHandler} />);
+        setProductType(
+          <Furniture
+            checkIsValid={productTypeValidHandler}
+            onInvalid={invalidInputMessageHandler}
+          />
+        );
         break;
       default:
         break;
@@ -67,6 +82,12 @@ const NewProduct = () => {
     setProdTypeIsValid(isValid);
   };
 
+  const invalidInputMessageHandler = event => {
+    event.target.setCustomValidity(
+      'Please, provide the data of indicated type'
+    );
+  };
+
   return (
     <Card className={classes['new-product']}>
       {showError && (
@@ -79,6 +100,8 @@ const NewProduct = () => {
           id='sku'
           onChange={skuChangeHandler}
           value={sku}
+          pattern='[a-zA-Z0-9-]+'
+          onInvalid={invalidInputMessageHandler}
         />
         <Input
           type='text'
@@ -86,6 +109,8 @@ const NewProduct = () => {
           id='name'
           onChange={nameChangeHandler}
           value={name}
+          pattern='[a-zA-Z0-9-]+'
+          onInvalid={invalidInputMessageHandler}
         />
         <Input
           type='text'
@@ -93,6 +118,8 @@ const NewProduct = () => {
           id='price'
           onChange={priceChangeHandler}
           value={price}
+          pattern='[a-zA-Z0-9-]+'
+          onInvalid={invalidInputMessageHandler}
         />
         <label htmlFor='productType'>Type Switcher</label>
         <select

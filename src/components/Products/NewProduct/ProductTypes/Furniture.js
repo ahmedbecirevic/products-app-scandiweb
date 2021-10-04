@@ -35,7 +35,7 @@ const furnitureReducer = (state, action) => {
   }
 };
 
-const Furniture = ({ checkIsValid }) => {
+const Furniture = ({ checkIsValid, onInvalid }) => {
   const [isValid, setIsValid] = useState(false);
   const [furniture, dispatchFurniture] = useReducer(
     furnitureReducer,
@@ -65,18 +65,27 @@ const Furniture = ({ checkIsValid }) => {
         type='text'
         label='Height (CM)'
         onChange={furnitureInputHandler}
+        value={furniture.height}
+        pattern='[a-zA-Z0-9-]+'
+        onInvalid={onInvalid}
       />
       <Input
         id='width'
         type='text'
         label='Width (CM)'
         onChange={furnitureInputHandler}
+        value={furniture.width}
+        pattern='[a-zA-Z0-9-]+'
+        onInvalid={onInvalid}
       />
       <Input
         id='length'
         type='text'
         label='Length (CM)'
         onChange={furnitureInputHandler}
+        value={furniture.length}
+        pattern='[a-zA-Z0-9-]+'
+        onInvalid={onInvalid}
       />
     </>
   );
