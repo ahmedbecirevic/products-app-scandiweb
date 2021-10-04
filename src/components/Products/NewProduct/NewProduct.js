@@ -6,6 +6,7 @@ import classes from './NewProduct.module.css';
 import Dvd from './ProductTypes/Dvd';
 import Book from './ProductTypes/Book';
 import Furniture from './ProductTypes/Furniture';
+import Alert from '@mui/material/Alert';
 
 const NewProduct = () => {
   const [formIsValid, setFormIsValid] = useState(false);
@@ -14,6 +15,7 @@ const NewProduct = () => {
   const [sku, setSku] = useState('');
   const [price, setPrice] = useState('');
   const [productType, setProductType] = useState(undefined);
+  const [showError, setShowError] = useState(false);
 
   const skuChangeHandler = event => {
     setSku(event.target.value);
@@ -45,6 +47,7 @@ const NewProduct = () => {
   // handle form submission func
   const submitHandler = event => {
     event.preventDefault();
+    setShowError(!formIsValid || !prodTypeIsValid);
     if (formIsValid && prodTypeIsValid) {
       // pass the data from reducer to API and ctx
       console.log('All Good!');
@@ -66,6 +69,9 @@ const NewProduct = () => {
 
   return (
     <Card className={classes['new-product']}>
+      {showError && (
+        <Alert severity='error'>Please, submit required data</Alert>
+      )}
       <form onSubmit={submitHandler}>
         <Input
           type='text'
@@ -107,7 +113,7 @@ const NewProduct = () => {
             Book
           </option>
         </select>
-        <Card>{productType}</Card>
+        <div>{productType}</div>
         <div className={classes.actions}>
           <Button type='submit' className={classes['btn-add']}>
             Add Product
