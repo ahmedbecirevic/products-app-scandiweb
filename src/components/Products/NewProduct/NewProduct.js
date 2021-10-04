@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Input from '../../UI/Input/Input';
 import Card from '../../UI/Card/Card';
 import Button from '../../UI/Button/Button';
@@ -9,6 +9,7 @@ import Furniture from './ProductTypes/Furniture';
 
 const NewProduct = () => {
   const [formIsValid, setFormIsValid] = useState(false);
+  const [prodTypeIsValid, setProdTypeIsValid] = useState(false);
   const [name, setName] = useState('');
   const [sku, setSku] = useState('');
   const [price, setPrice] = useState('');
@@ -28,13 +29,13 @@ const NewProduct = () => {
   const productTypeHandler = event => {
     switch (event.target.value) {
       case 'DVD':
-        setProductType(<Dvd />);
+        setProductType(<Dvd checkIsValid={productTypeValidHandler} />);
         break;
       case 'BOOK':
-        setProductType(<Book />);
+        setProductType(<Book checkIsValid={productTypeValidHandler} />);
         break;
       case 'FURN':
-        setProductType(<Furniture />);
+        setProductType(<Furniture checkIsValid={productTypeValidHandler} />);
         break;
       default:
         break;
@@ -44,12 +45,23 @@ const NewProduct = () => {
   // handle form submission func
   const submitHandler = event => {
     event.preventDefault();
-    if (formIsValid) {
+    if (formIsValid && prodTypeIsValid) {
       // pass the data from reducer to API and ctx
+      console.log('All Good!');
+      setSku('');
+      setName('');
+      setPrice('');
     }
-    setSku('');
-    setName('');
-    setPrice('');
+  };
+
+  useEffect(() => {
+    setFormIsValid(
+      name.trim().length > 0 && sku.trim().length > 0 && price.trim().length > 0
+    );
+  }, [name, price, sku]);
+
+  const productTypeValidHandler = isValid => {
+    setProdTypeIsValid(isValid);
   };
 
   return (
