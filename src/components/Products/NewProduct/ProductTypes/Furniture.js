@@ -66,8 +66,7 @@ const Furniture = ({ checkIsValid, onInvalid }) => {
         label='Height (CM)'
         onChange={furnitureInputHandler}
         value={furniture.height}
-        pattern='[a-zA-Z0-9-]+'
-        onInvalid={onInvalid}
+        pattern='([0-9]+\.?[0-9]*|\.[0-9]+)$'
       />
       <Input
         id='width'
@@ -75,8 +74,7 @@ const Furniture = ({ checkIsValid, onInvalid }) => {
         label='Width (CM)'
         onChange={furnitureInputHandler}
         value={furniture.width}
-        pattern='[a-zA-Z0-9-]+'
-        onInvalid={onInvalid}
+        pattern='([0-9]+\.?[0-9]*|\.[0-9]+)$'
       />
       <Input
         id='length'
@@ -84,9 +82,9 @@ const Furniture = ({ checkIsValid, onInvalid }) => {
         label='Length (CM)'
         onChange={furnitureInputHandler}
         value={furniture.length}
-        pattern='[a-zA-Z0-9-]+'
-        onInvalid={onInvalid}
+        pattern='([0-9]+\.?[0-9]*|\.[0-9]+)$'
       />
+      <p>Please, provide dimensions in HxWxL format!</p>
     </>
   );
 };

@@ -13,15 +13,17 @@ const Dvd = ({ checkIsValid, onInvalid }) => {
   }, [dvd]);
 
   return (
-    <Input
-      onChange={dvdChangeHandler}
-      id='size'
-      type='text'
-      label='Size (MB)'
-      value={dvd}
-      pattern='[a-zA-Z0-9-]+'
-      onInvalid={onInvalid}
-    />
+    <>
+      <Input
+        onChange={dvdChangeHandler}
+        id='size'
+        type='text'
+        label='Size (MB)'
+        value={dvd}
+        pattern='([0-9]+\.?[0-9]*|\.[0-9]+)$'
+      />
+      <p>Please, provide size in MegaBytes!</p>
+    </>
   );
 };
 

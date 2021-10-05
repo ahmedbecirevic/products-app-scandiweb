@@ -13,15 +13,17 @@ const Book = ({ checkIsValid, onInvalid }) => {
   }, [book]);
 
   return (
-    <Input
-      onChange={bookChangeHandler}
-      id='weight'
-      type='text'
-      label='Weight (KG)'
-      value={book}
-      pattern='[a-zA-Z0-9-]+'
-      onInvalid={onInvalid}
-    />
+    <>
+      <Input
+        onChange={bookChangeHandler}
+        id='weight'
+        type='text'
+        label='Weight (KG)'
+        value={book}
+        pattern='([0-9]+\.?[0-9]*|\.[0-9]+)$'
+      />
+      <p>Please, provide weight in kilograms!</p>
+    </>
   );
 };
 

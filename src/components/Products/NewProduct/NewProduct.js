@@ -31,28 +31,13 @@ const NewProduct = () => {
   const productTypeHandler = event => {
     switch (event.target.value) {
       case 'DVD':
-        setProductType(
-          <Dvd
-            checkIsValid={productTypeValidHandler}
-            onInvalid={invalidInputMessageHandler}
-          />
-        );
+        setProductType(<Dvd checkIsValid={productTypeValidHandler} />);
         break;
       case 'BOOK':
-        setProductType(
-          <Book
-            checkIsValid={productTypeValidHandler}
-            onInvalid={invalidInputMessageHandler}
-          />
-        );
+        setProductType(<Book checkIsValid={productTypeValidHandler} />);
         break;
       case 'FURN':
-        setProductType(
-          <Furniture
-            checkIsValid={productTypeValidHandler}
-            onInvalid={invalidInputMessageHandler}
-          />
-        );
+        setProductType(<Furniture checkIsValid={productTypeValidHandler} />);
         break;
       default:
         break;
@@ -82,12 +67,6 @@ const NewProduct = () => {
     setProdTypeIsValid(isValid);
   };
 
-  const invalidInputMessageHandler = event => {
-    event.target.setCustomValidity(
-      'Please, provide the data of indicated type'
-    );
-  };
-
   return (
     <Card className={classes['new-product']}>
       {showError && (
@@ -100,8 +79,7 @@ const NewProduct = () => {
           id='sku'
           onChange={skuChangeHandler}
           value={sku}
-          pattern='[a-zA-Z0-9-]+'
-          onInvalid={invalidInputMessageHandler}
+          pattern='[A-Z0-9]+'
         />
         <Input
           type='text'
@@ -109,8 +87,7 @@ const NewProduct = () => {
           id='name'
           onChange={nameChangeHandler}
           value={name}
-          pattern='[a-zA-Z0-9-]+'
-          onInvalid={invalidInputMessageHandler}
+          pattern='^[A-Za-z0-9 _]+'
         />
         <Input
           type='text'
@@ -118,8 +95,7 @@ const NewProduct = () => {
           id='price'
           onChange={priceChangeHandler}
           value={price}
-          pattern='[a-zA-Z0-9-]+'
-          onInvalid={invalidInputMessageHandler}
+          pattern='([0-9]+\.?[0-9]*|\.[0-9]+)$'
         />
         <label htmlFor='productType'>Type Switcher</label>
         <select
