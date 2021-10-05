@@ -116,7 +116,9 @@ const NewProduct = () => {
             Book
           </option>
         </select>
-        <div>{productType}</div>
+        <div className={`${productType ? classes['product-type'] : ''}`}>
+          {productType}
+        </div>
         <div className={classes.actions}>
           <Button type='submit' className={classes['btn-add']}>
             Add Product

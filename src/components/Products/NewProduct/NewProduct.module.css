@@ -19,7 +19,7 @@
 }
 
 .type-select {
-  width: 100%;
+  width: 50%;
   min-width: 15ch;
   max-width: 30ch;
   border: 1px solid #777;
@@ -39,11 +39,25 @@
 }
 
 .new-product select {
-  width: 100%;
+  width: 50%;
   float: right;
   flex: 3;
   font: inherit;
   padding: 0.35rem 0.35rem;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid #bdb9b9;
+}
+
+.product-type {
+  margin-top: 0.8rem;
+  padding: 0.35rem 0.35rem;
+  border: 3px solid #bdb9b9;
+  border-radius: 6px;
+}
+
+@media (min-width: 768px) {
+  .type-select {
+    align-items: center;
+    flex-direction: row;
+  }
 }
