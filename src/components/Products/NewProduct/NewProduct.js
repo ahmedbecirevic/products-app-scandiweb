@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { useHistory } from 'react-router';
+import ProductsContext from '../../../store/products-context';
 import Input from '../../UI/Input/Input';
 import Card from '../../UI/Card/Card';
 import Button from '../../UI/Button/Button';
@@ -7,15 +9,26 @@ import Dvd from './ProductTypes/Dvd';
 import Book from './ProductTypes/Book';
 import Furniture from './ProductTypes/Furniture';
 import Alert from '@mui/material/Alert';
+import axios from 'axios';
 
 const NewProduct = () => {
+  // context
+  const productsCtx = useContext(ProductsContext);
+  // state
   const [formIsValid, setFormIsValid] = useState(false);
   const [prodTypeIsValid, setProdTypeIsValid] = useState(false);
   const [name, setName] = useState('');
   const [sku, setSku] = useState('');
   const [price, setPrice] = useState('');
-  const [productType, setProductType] = useState(undefined);
+  const [productType, setProductType] = useState({
+    comp: undefined,
+    type: undefined,
+  });
+  const [selectedProd, setSelectedProd] = useState('');
   const [showError, setShowError] = useState(false);
+  // api path
+  const { REACT_APP_HOST } = process.env;
+  const history = useHistory();
 
   const skuChangeHandler = event => {
     setSku(event.target.value);
@@ -31,13 +44,37 @@ const NewProduct = () => {
   const productTypeHandler = event => {
     switch (event.target.value) {
       case 'DVD':
-        setProductType(<Dvd checkIsValid={productTypeValidHandler} />);
+        setProductType({
+          comp: (
+            <Dvd
+              checkIsValid={productTypeValidHandler}
+              getState={dvd => setSelectedProd(dvd)}
+            />
+          ),
+          type: 'DVD',
+        });
         break;
       case 'BOOK':
-        setProductType(<Book checkIsValid={productTypeValidHandler} />);
+        setProductType({
+          comp: (
+            <Book
+              checkIsValid={productTypeValidHandler}
+              getState={book => setSelectedProd(book)}
+            />
+          ),
+          type: 'BOOK',
+        });
         break;
       case 'FURN':
-        setProductType(<Furniture checkIsValid={productTypeValidHandler} />);
+        setProductType({
+          comp: (
+            <Furniture
+              checkIsValid={productTypeValidHandler}
+              getState={furniture => setSelectedProd(furniture)}
+            />
+          ),
+          type: 'FURN',
+        });
         break;
       default:
         break;
@@ -50,10 +87,23 @@ const NewProduct = () => {
     setShowError(!formIsValid || !prodTypeIsValid);
     if (formIsValid && prodTypeIsValid) {
       // pass the data from reducer to API and ctx
-      console.log('All Good!');
-      setSku('');
-      setName('');
-      setPrice('');
+      const product = {
+        SKU: sku,
+        name: name,
+        price: price,
+        prod_attribute: selectedProd,
+        type: productType.type,
+      };
+      axios
+        .post(`${REACT_APP_HOST}api/products`, product)
+        .then(res => {
+          productsCtx.addNewProduct(res.data);
+          // setSku('');
+          // setName('');
+          // setPrice('');
+          history.push(`/`);
+        })
+        .catch(err => console.log(err));
     }
   };
 
@@ -116,12 +166,12 @@ const NewProduct = () => {
             Book
           </option>
         </select>
-        <div className={`${productType ? classes['product-type'] : ''}`}>
-          {productType}
+        <div className={`${productType.comp ? classes['product-type'] : ''}`}>
+          {productType.comp}
         </div>
         <div className={classes.actions}>
           <Button type='submit' className={classes['btn-add']}>
-            Add Product
+            Save
           </Button>
           <Button type='reset' className={classes['btn-cancel']}>
             Cancel

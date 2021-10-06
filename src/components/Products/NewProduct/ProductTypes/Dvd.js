@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Input from '../../../UI/Input/Input';
 
-const Dvd = ({ checkIsValid, onInvalid }) => {
+const Dvd = ({ checkIsValid, getState }) => {
   const [dvd, setDvd] = useState('');
 
   const dvdChangeHandler = event => {
@@ -10,7 +10,8 @@ const Dvd = ({ checkIsValid, onInvalid }) => {
 
   useEffect(() => {
     checkIsValid(dvd.trim().length > 0);
-  }, [dvd]);
+    getState(dvd);
+  }, [dvd, checkIsValid, getState]);
 
   return (
     <>

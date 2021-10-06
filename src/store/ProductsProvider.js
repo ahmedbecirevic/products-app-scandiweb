@@ -2,31 +2,31 @@ import axios from 'axios';
 import { useCallback, useState, useEffect } from 'react';
 import ProductsContext from './products-context';
 
-const useGetProductTypes = endpoint => {
-  const [response, setResponse] = useState([]);
-  const [error, setError] = useState('');
-  const source = axios.CancelToken.source();
+// const useGetProductTypes = endpoint => {
+//   const [response, setResponse] = useState([]);
+//   const [error, setError] = useState('');
+//   const source = axios.CancelToken.source();
 
-  const fetchData = () => {
-    axios
-      .get(endpoint, {
-        cancelToken: source.token,
-      })
-      .then(res => {
-        setResponse(res.data);
-      })
-      .catch(err => {
-        setError(err);
-      });
-  };
+//   const fetchData = () => {
+//     axios
+//       .get(endpoint, {
+//         cancelToken: source.token,
+//       })
+//       .then(res => {
+//         setResponse(res.data);
+//       })
+//       .catch(err => {
+//         setError(err);
+//       });
+//   };
 
-  useEffect(() => {
-    fetchData();
-    return () => source.cancel();
-  }, []);
+//   useEffect(() => {
+//     fetchData();
+//     return () => source.cancel();
+//   }, []);
 
-  return response;
-};
+//   return response;
+// };
 
 const PROD_ARRAY = [];
 
@@ -134,6 +134,10 @@ const ProductsProvider = props => {
     });
   };
 
+  const addProductHandler = product => {
+    setProducts(prevState => [...prevState, product]);
+  };
+
   const productsContext = {
     products: products,
     listProdToDelete: productsToDelete,
@@ -141,6 +145,7 @@ const ProductsProvider = props => {
     addProductToDelete: addProductToDeleteHandler,
     removeProductFromDelete: removeProductFromDeleteHandler,
     deleteProducts: deleteProductsHandler,
+    addNewProduct: addProductHandler,
   };
 
   return (

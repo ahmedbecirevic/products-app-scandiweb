@@ -7,6 +7,7 @@ const ProductsContext = React.createContext({
   addProductToDelete: SKU => {},
   removeProductFromDelete: SKU => {},
   deleteProducts: () => {},
+  addNewProduct: product => {},
 });
 
 export default ProductsContext;

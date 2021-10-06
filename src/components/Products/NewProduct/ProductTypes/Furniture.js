@@ -35,7 +35,7 @@ const furnitureReducer = (state, action) => {
   }
 };
 
-const Furniture = ({ checkIsValid, onInvalid }) => {
+const Furniture = ({ checkIsValid, getState }) => {
   const [isValid, setIsValid] = useState(false);
   const [furniture, dispatchFurniture] = useReducer(
     furnitureReducer,
@@ -54,9 +54,12 @@ const Furniture = ({ checkIsValid, onInvalid }) => {
     setIsValid(heightIsValid && widthIsValid && lengthIsValid);
   }, [heightIsValid, widthIsValid, lengthIsValid]);
 
+  const { height, width, length } = furniture;
+
   useEffect(() => {
     checkIsValid(isValid);
-  }, [isValid]);
+    getState(`${height}x${width}x${length}`);
+  }, [isValid, checkIsValid, getState, height, width, length]);
 
   return (
     <>

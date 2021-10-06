@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Input from '../../../UI/Input/Input';
 
-const Book = ({ checkIsValid, onInvalid }) => {
+const Book = ({ checkIsValid, getState }) => {
   const [book, setBook] = useState('');
 
   const bookChangeHandler = event => {
@@ -10,7 +10,8 @@ const Book = ({ checkIsValid, onInvalid }) => {
 
   useEffect(() => {
     checkIsValid(book.trim().length > 0);
-  }, [book]);
+    getState(book);
+  }, [book, checkIsValid, getState]);
 
   return (
     <>
