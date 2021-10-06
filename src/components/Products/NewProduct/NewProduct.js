@@ -26,6 +26,7 @@ const NewProduct = () => {
   });
   const [selectedProd, setSelectedProd] = useState('');
   const [showError, setShowError] = useState(false);
+  const [saveDisabled, setSaveDisabled] = useState(false);
   // api path
   const { REACT_APP_HOST } = process.env;
   const history = useHistory();
@@ -86,6 +87,8 @@ const NewProduct = () => {
     event.preventDefault();
     setShowError(!formIsValid || !prodTypeIsValid);
     if (formIsValid && prodTypeIsValid) {
+      // disable save button
+      setSaveDisabled(true);
       // pass the data from reducer to API and ctx
       const product = {
         SKU: sku,
@@ -98,9 +101,7 @@ const NewProduct = () => {
         .post(`${REACT_APP_HOST}api/products`, product)
         .then(res => {
           productsCtx.addNewProduct(res.data);
-          // setSku('');
-          // setName('');
-          // setPrice('');
+          setSaveDisabled(false);
           history.push(`/`);
         })
         .catch(err => console.log(err));
@@ -170,7 +171,11 @@ const NewProduct = () => {
           {productType.comp}
         </div>
         <div className={classes.actions}>
-          <Button type='submit' className={classes['btn-add']}>
+          <Button
+            type='submit'
+            className={classes['btn-add']}
+            disabled={saveDisabled}
+          >
             Save
           </Button>
           <Button type='reset' className={classes['btn-cancel']}>
