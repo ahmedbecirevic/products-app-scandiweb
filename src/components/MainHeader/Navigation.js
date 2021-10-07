@@ -16,14 +16,15 @@ const Navigation = () => {
     <nav className={classes.nav}>
       <ul>
         <Link to='/addproduct'>
-          <Button id='add-product-btn'>Add</Button>
+          <Button id='add-product-btn'>ADD</Button>
         </Link>
         <Button
+          id='delete-product-btn'
           disabled={productsCtx.deleteDisabled}
           onClick={deleteProductsHandler}
-          id={classes['delete-product-btn']}
+          className={classes['delete-product-btn']}
         >
-          Delete
+          MASS DELETE
         </Button>
       </ul>
     </nav>

@@ -31,7 +31,12 @@ const Product = ({ product }) => {
   return (
     <div className='card-columns'>
       <Card className={`${classes.card}`}>
-        <input type='checkbox' ref={checkboxRef} onChange={checkedHandler} />
+        <input
+          className='delete-checkbox'
+          type='checkbox'
+          ref={checkboxRef}
+          onChange={checkedHandler}
+        />
         <Card.Body>
           <Card.Text>{product.SKU}</Card.Text>
           <Card.Text>{product.name}</Card.Text>

@@ -3,7 +3,7 @@ import classes from './Checkbox.module.css';
 const Checkbox = ({ checked, onChange }) => {
   return (
     <input
-      className={classes['delete-checkbox']}
+      className={`${classes['checkbox']}`}
       type='checkbox'
       checked={checked}
       onChange={onChange}
