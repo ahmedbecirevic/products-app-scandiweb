@@ -134,7 +134,7 @@ const NewProduct = () => {
       {showError && (
         <Alert severity='error'>Please, submit required data</Alert>
       )}
-      <form onSubmit={submitHandler}>
+      <form onSubmit={submitHandler} id='product_form'>
         <Input
           type='text'
           label='SKU'
