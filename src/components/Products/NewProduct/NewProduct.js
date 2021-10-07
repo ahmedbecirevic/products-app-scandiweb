@@ -98,7 +98,7 @@ const NewProduct = () => {
         type: productType.type,
       };
       axios
-        .post(`${REACT_APP_HOST}api/products`, product)
+        .post(`${REACT_APP_HOST}/products`, product)
         .then(res => {
           productsCtx.addNewProduct(res.data);
           setSaveDisabled(false);
