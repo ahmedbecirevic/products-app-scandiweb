@@ -82,6 +82,17 @@ const NewProduct = () => {
     }
   };
 
+  // erase all values for product adding
+  const onCancelHandler = () => {
+    setProductType({
+      comp: undefined,
+      type: undefined,
+    });
+    setSku('');
+    setPrice('');
+    setName('');
+  };
+
   // handle form submission func
   const submitHandler = event => {
     event.preventDefault();
@@ -178,7 +189,11 @@ const NewProduct = () => {
           >
             Save
           </Button>
-          <Button type='reset' className={classes['btn-cancel']}>
+          <Button
+            type='reset'
+            onClick={onCancelHandler}
+            className={classes['btn-cancel']}
+          >
             Cancel
           </Button>
         </div>
