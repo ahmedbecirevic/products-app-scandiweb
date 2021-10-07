@@ -10,6 +10,11 @@ const ProductsProvider = props => {
   const [isDeleteDisabled, setIsDeleteDisabled] = useState(false);
   const [products, setProducts] = useState([]);
 
+  // add new product to state
+  const addProductHandler = product => {
+    setProducts(prevState => [...prevState, product]);
+  };
+
   // delete products
   const deleteProductsHandler = useCallback(() => {
     // ensure the data is sent in right form to API
@@ -34,7 +39,7 @@ const ProductsProvider = props => {
             return filteredProducts;
           });
           // set the deletion array to empty
-          setProductsToDelete(prevState => []);
+          setProductsToDelete([]);
           setIsDeleteDisabled(false);
         })
         .catch(err => console.log(err));
@@ -62,11 +67,12 @@ const ProductsProvider = props => {
 
     getProducts();
 
-    // CLean up function to ensure no state update on unmounted components
+    // CLean up function to ensure no state update on unmounted components -> cancel http request
     return () => {
       source.cancel();
     };
-  }, [REACT_APP_HOST]);
+    // eslint-disable-next-line
+  }, []);
 
   // add product SKU to deletion list
   const addProductToDeleteHandler = SKU => {
@@ -81,10 +87,6 @@ const ProductsProvider = props => {
       const newArray = prevState.filter(skuState => skuState !== SKU);
       return newArray;
     });
-  };
-
-  const addProductHandler = product => {
-    setProducts(prevState => [...prevState, product]);
   };
 
   const productsContext = {

@@ -108,10 +108,10 @@ const NewProduct = () => {
         prod_attribute: selectedProd,
         type: productType.type,
       };
+      productsCtx.addNewProduct(product);
       axios
         .post(`${REACT_APP_HOST}/products`, product)
         .then(res => {
-          productsCtx.addNewProduct(res.data);
           setSaveDisabled(false);
           history.push(`/`);
         })
