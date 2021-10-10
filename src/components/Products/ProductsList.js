@@ -1,11 +1,10 @@
 import Product from './Product';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import classes from './ProductsList.module.css';
 import axios from 'axios';
 import ProductsContext from '../../store/products-context';
 
 const ProductsList = () => {
-  const [products, setProducts] = useState([]);
   const { REACT_APP_HOST } = process.env;
   const productsCtx = useContext(ProductsContext);
 
@@ -18,7 +17,6 @@ const ProductsList = () => {
           cancelToken: source.token,
         })
         .then(res => {
-          setProducts(res.data);
           productsCtx.addProducts(res.data);
         })
         .catch(error => {

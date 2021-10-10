@@ -10,16 +10,18 @@ const Navigation = () => {
   const { REACT_APP_HOST } = process.env;
   const productsCtx = useContext(ProductsContext);
 
+  const { listProdToDelete, removeProducts } = productsCtx;
+
   const deleteProductsHandler = useCallback(() => {
-    if (productsCtx.listProdToDelete.length > 0) {
+    if (listProdToDelete.length > 0) {
       // ensure the data is sent in right form to API
       const properFormForDeletion = {
-        SKU: productsCtx.listProdToDelete,
+        SKU: listProdToDelete,
       };
       // disable delete button
       setIsDeleteDisabled(true);
 
-      productsCtx.removeProducts();
+      removeProducts();
 
       // make a http req to API
       axios
@@ -30,11 +32,7 @@ const Navigation = () => {
         })
         .catch(err => console.log(err));
     }
-  }, [
-    REACT_APP_HOST,
-    productsCtx.listProdToDelete,
-    productsCtx.removeProducts,
-  ]);
+  }, [REACT_APP_HOST, listProdToDelete, removeProducts]);
 
   return (
     <nav className={classes.nav}>
