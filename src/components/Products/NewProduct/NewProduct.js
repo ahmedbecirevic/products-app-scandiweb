@@ -91,6 +91,7 @@ const NewProduct = () => {
     setSku('');
     setPrice('');
     setName('');
+    history.push(`/`);
   };
 
   // handle form submission func

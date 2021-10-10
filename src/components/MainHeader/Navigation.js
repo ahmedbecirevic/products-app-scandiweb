@@ -2,15 +2,39 @@ import ProductsContext from '../../store/products-context';
 import Button from '../UI/Button/Button';
 import { Link } from 'react-router-dom';
 import classes from './Navigation.module.css';
-import { useContext } from 'react';
+import { useContext, useCallback, useState } from 'react';
+import axios from 'axios';
 
 const Navigation = () => {
+  const [isDeleteDisabled, setIsDeleteDisabled] = useState(false);
+  const { REACT_APP_HOST } = process.env;
   const productsCtx = useContext(ProductsContext);
 
+  const deleteProductsHandler = useCallback(() => {
+    if (productsCtx.listProdToDelete.length > 0) {
+      // ensure the data is sent in right form to API
+      const properFormForDeletion = {
+        SKU: productsCtx.listProdToDelete,
+      };
+      // disable delete button
+      setIsDeleteDisabled(true);
 
-  const deleteProductsHandler = () => {
-    productsCtx.deleteProducts();
-  };
+      productsCtx.removeProducts();
+
+      // make a http req to API
+      axios
+        .post(`${REACT_APP_HOST}/products/delete`, properFormForDeletion)
+        .then(() => {
+          // enable delete button
+          setIsDeleteDisabled(false);
+        })
+        .catch(err => console.log(err));
+    }
+  }, [
+    REACT_APP_HOST,
+    productsCtx.listProdToDelete,
+    productsCtx.removeProducts,
+  ]);
 
   return (
     <nav className={classes.nav}>
@@ -20,7 +44,7 @@ const Navigation = () => {
         </Link>
         <Button
           id='delete-product-btn'
-          disabled={productsCtx.deleteDisabled}
+          disabled={isDeleteDisabled}
           onClick={deleteProductsHandler}
           className={classes['delete-product-btn']}
         >

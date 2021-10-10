@@ -1,14 +1,16 @@
+import React from 'react';
 import classes from './Checkbox.module.css';
 
-const Checkbox = ({ checked, onChange }) => {
+const Checkbox = React.forwardRef((props, ref) => {
   return (
     <input
-      className={`${classes['checkbox']}`}
+      className={`${classes['checkbox']} ${props.className}`}
       type='checkbox'
-      checked={checked}
-      onChange={onChange}
+      ref={ref}
+      onChange={props.onChange}
+      id={props.id}
     />
   );
-};
+});
 
 export default Checkbox;

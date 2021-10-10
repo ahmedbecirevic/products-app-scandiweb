@@ -3,6 +3,7 @@ import ProductsContext from '../../store/products-context';
 import { Card } from 'react-bootstrap';
 import classes from './Product.module.css';
 import { useContext } from 'react';
+import Checkbox from '../UI/Checkbox/Checkbox';
 
 const PROD_TYPES = { FURN: 'Dimension', DVD: 'Size', BOOK: 'Weight' };
 const PROD_UNITS = { FURN: '', DVD: 'MB', BOOK: 'KG' };
@@ -31,7 +32,7 @@ const Product = ({ product }) => {
   return (
     <div className='card-columns'>
       <Card className={`${classes.card}`}>
-        <input
+        <Checkbox
           className='delete-checkbox'
           type='checkbox'
           ref={checkboxRef}

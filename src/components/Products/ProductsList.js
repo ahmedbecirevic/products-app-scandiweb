@@ -1,10 +1,41 @@
 import Product from './Product';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import classes from './ProductsList.module.css';
+import axios from 'axios';
 import ProductsContext from '../../store/products-context';
 
 const ProductsList = () => {
+  const [products, setProducts] = useState([]);
+  const { REACT_APP_HOST } = process.env;
   const productsCtx = useContext(ProductsContext);
+
+  useEffect(() => {
+    const source = axios.CancelToken.source();
+
+    const getProducts = () => {
+      axios
+        .get(`${REACT_APP_HOST}/products`, {
+          cancelToken: source.token,
+        })
+        .then(res => {
+          setProducts(res.data);
+          productsCtx.addProducts(res.data);
+        })
+        .catch(error => {
+          if (!axios.isCancel(error)) {
+            console.log(error);
+          }
+        });
+    };
+
+    getProducts();
+
+    // CLean up function to ensure no state update on unmounted components -> cancel http request
+    return () => {
+      source.cancel();
+    };
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className={`${classes['products-list']}`}>
