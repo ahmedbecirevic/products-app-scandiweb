@@ -53,7 +53,6 @@ const ProductsProvider = props => {
     removeProducts: removeProductsHandler,
   };
 
-  console.log('RUNNING: context');
   return (
     <ProductsContext.Provider value={productsContext}>
       {props.children}
