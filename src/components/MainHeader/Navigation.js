@@ -3,12 +3,14 @@ import Button from '../UI/Button/Button';
 import { Link } from 'react-router-dom';
 import classes from './Navigation.module.css';
 import { useContext, useCallback, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 const Navigation = () => {
   const [isDeleteDisabled, setIsDeleteDisabled] = useState(false);
   const { REACT_APP_HOST } = process.env;
   const productsCtx = useContext(ProductsContext);
+  const location = useLocation();
 
   const { listProdToDelete, removeProducts } = productsCtx;
 
@@ -36,19 +38,21 @@ const Navigation = () => {
 
   return (
     <nav className={classes.nav}>
-      <ul>
-        <Link to='/addproduct'>
-          <Button id='add-product-btn'>ADD</Button>
-        </Link>
-        <Button
-          id='delete-product-btn'
-          disabled={isDeleteDisabled}
-          onClick={deleteProductsHandler}
-          className={classes['delete-product-btn']}
-        >
-          MASS DELETE
-        </Button>
-      </ul>
+      {location.pathname === '/' && (
+        <ul>
+          <Link to='/addproduct'>
+            <Button id='add-product-btn'>ADD</Button>
+          </Link>
+          <Button
+            id='delete-product-btn'
+            disabled={isDeleteDisabled}
+            onClick={deleteProductsHandler}
+            className={classes['delete-product-btn']}
+          >
+            MASS DELETE
+          </Button>
+        </ul>
+      )}
     </nav>
   );
 };
