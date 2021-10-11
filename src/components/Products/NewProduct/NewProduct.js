@@ -97,7 +97,9 @@ const NewProduct = () => {
   // handle form submission func
   const submitHandler = event => {
     event.preventDefault();
+
     setShowError(!formIsValid || !prodTypeIsValid);
+
     if (formIsValid && prodTypeIsValid) {
       // disable save button
       setSaveDisabled(true);
@@ -109,12 +111,12 @@ const NewProduct = () => {
         prod_attribute: selectedProd,
         type: productType.type,
       };
-      // add product to ctx
-      productsCtx.addNewProduct(product);
       // make http request
       axios
         .post(`${REACT_APP_HOST}/products`, product)
         .then(res => {
+          // add product to ctx
+          productsCtx.addNewProduct(product);
           setSaveDisabled(false);
           history.push(`/`);
         })
