@@ -109,7 +109,9 @@ const NewProduct = () => {
         prod_attribute: selectedProd,
         type: productType.type,
       };
+      // add product to ctx
       productsCtx.addNewProduct(product);
+      // make http request
       axios
         .post(`${REACT_APP_HOST}/products`, product)
         .then(res => {
@@ -142,7 +144,7 @@ const NewProduct = () => {
           id='sku'
           onChange={skuChangeHandler}
           value={sku}
-          pattern='[A-Z0-9]+'
+          pattern='[A-Za-z0-9]+'
         />
         <Input
           type='text'
