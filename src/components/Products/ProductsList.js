@@ -37,9 +37,10 @@ const ProductsList = () => {
 
   return (
     <div className={`${classes['products-list']}`}>
-      {productsCtx.products.map(product => {
-        return <Product key={product.SKU} product={product} />;
-      })}
+      {Array.isArray(productsCtx.products) &&
+        productsCtx.products.map(product => {
+          return <Product key={product.SKU} product={product} />;
+        })}
     </div>
   );
 };
