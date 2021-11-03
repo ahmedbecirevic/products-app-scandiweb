@@ -40,11 +40,6 @@ class BaseDao
         $this->connection->commit();
     }
 
-    // public function deleteBySKU ($skuList) {
-    //     $query = "DELETE FROM $this->table WHERE SKU IN (:skuList)";
-    //     $this->query($query, ["skuList" => $skuList]);
-    // }
-
     public function parseOrder($order)
     {
         switch (mb_substr($order, 0, 1)) {

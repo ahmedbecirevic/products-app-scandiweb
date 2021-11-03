@@ -1,0 +1,16 @@
+{
+  "name": "ahmed/api",
+  "description": "api for products app",
+  "authors": [
+    {
+      "name": "ahmedbecirevic",
+      "email": "ahmed.becirevic@stu.ibu.edu.ba"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "api\\": "./"
+    }
+  },
+  "require": {}
+}

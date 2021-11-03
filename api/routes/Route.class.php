@@ -1,10 +1,13 @@
 <?php
-class Route {
+
+class Route 
+{
   private static $routes = Array();
   private static $pathNotFound = null;
   private static $methodNotAllowed = null;
 
-  public static function add($expression, $function, $method = 'get') {
+  public static function add($expression, $function, $method = 'get') 
+  {
     array_push(
       self::$routes, 
       Array(
@@ -15,7 +18,8 @@ class Route {
     );
   }
 
-  public static function run($basepath = '/') {
+  public static function run($basepath = '/') 
+  {
     $parsed_url = parse_url($_SERVER['REQUEST_URI']);//Parse Uri
 
     if(isset($parsed_url['path'])){
@@ -30,22 +34,26 @@ class Route {
 
     $route_match_found = false;
 
-    foreach (self::$routes as $route) {
-      if($basepath != '' && $basepath != '/'){
+    foreach (self::$routes as $route) 
+    {
+      if ($basepath != '' && $basepath != '/') {
         $route['expression'] = '('.$basepath.')'.$route['expression'];
       }
 
       $route['expression'] = '^' . $route['expression'];
       $route['expression'] = $route['expression'] . '$';
 
-      if(preg_match('#' . $route['expression'] . '#', $path, $matches)) {
+      if (preg_match('#' . $route['expression'] . '#', $path, $matches)) 
+      {
         $path_match_found = true;
 
-        if(strtolower($method) == strtolower($route['method'])) {
+        if (strtolower($method) == strtolower($route['method'])) 
+        {
 
           array_shift($matches);// Always remove first element. This contains the whole string
 
-          if($basepath != '' && $basepath != '/') {
+          if ($basepath != '' && $basepath != '/') 
+          {
             array_shift($matches);// Remove basepath
           }
 
@@ -58,26 +66,33 @@ class Route {
       }
     }
 
-    if(!$route_match_found) {
-      if($path_match_found){
+    if (!$route_match_found)
+    {
+      if ($path_match_found)
+      {
         header("HTTP/1.0 405 Method Not Allowed");
-        if(self::$methodNotAllowed){
+        if (self::$methodNotAllowed)
+        {
           call_user_func_array(self::$methodNotAllowed, Array($path,$method));
         }
-      }else{
+      } else 
+      {
         header("HTTP/1.0 404 Not Found");
-        if(self::$pathNotFound){
+        if (self::$pathNotFound)
+        {
           call_user_func_array(self::$pathNotFound, Array($path));
         }
       }
     }
   }
 
-  public static function pathNotFound($function) {
+  public static function pathNotFound($function) 
+  {
     self::$pathNotFound = $function;
   }
 
-  public static function methodNotAllowed($function) {
+  public static function methodNotAllowed($function) 
+  {
     self::$methodNotAllowed = $function;
   }
 
