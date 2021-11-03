@@ -6,7 +6,7 @@ import ProductsContext from '../../store/products-context';
 
 const ProductsList = () => {
   const { REACT_APP_HOST } = process.env;
-  const productsCtx = useContext(ProductsContext);
+  const { addProducts, products } = useContext(ProductsContext);
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -17,7 +17,7 @@ const ProductsList = () => {
           cancelToken: source.token,
         })
         .then(res => {
-          productsCtx.addProducts(res.data);
+          addProducts(res.data);
         })
         .catch(error => {
           if (!axios.isCancel(error)) {
@@ -32,15 +32,17 @@ const ProductsList = () => {
     return () => {
       source.cancel();
     };
-    // eslint-disable-next-line
-  }, []);
+  }, [REACT_APP_HOST, addProducts]);
 
   return (
     <div className={`${classes['products-list']}`}>
-      {Array.isArray(productsCtx.products) &&
-        productsCtx.products.map(product => {
+      {Array.isArray(products) ? (
+        products.map(product => {
           return <Product key={product.SKU} product={product} />;
-        })}
+        })
+      ) : (
+        <p>Error has occured</p>
+      )}
     </div>
   );
 };

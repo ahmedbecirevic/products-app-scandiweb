@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import ProductsContext from './products-context';
 
 const ProductsProvider = props => {
@@ -6,16 +6,16 @@ const ProductsProvider = props => {
   const [products, setProducts] = useState([]);
 
   // add new product to state
-  const addProductsHandler = products => {
+  const addProductsHandler = useCallback(products => {
     setProducts(products);
-  };
+  }, []);
 
-  const addNewProductHandler = product => {
+  const addNewProductHandler = useCallback(product => {
     setProducts(prevProducts => [...prevProducts, product]);
-  };
+  }, []);
 
   // filter deleted products
-  const removeProductsHandler = () => {
+  const removeProductsHandler = useCallback(() => {
     const deleted = productsToDelete;
     // remove deleted products from current products state
     setProducts(prevState => {
@@ -26,22 +26,22 @@ const ProductsProvider = props => {
     });
     // set the deletion array to empty
     setProductsToDelete([]);
-  };
+  }, [productsToDelete]);
 
   // add product SKU to deletion list
-  const addProductToDeleteHandler = SKU => {
+  const addProductToDeleteHandler = useCallback(SKU => {
     setProductsToDelete(prevState => {
       return [...prevState, SKU];
     });
-  };
+  }, []);
 
   // remove product SKU from the deletion list
-  const removeProductFromDeleteHandler = SKU => {
+  const removeProductFromDeleteHandler = useCallback(SKU => {
     setProductsToDelete(prevState => {
       const removedFromDelete = prevState.filter(skuState => skuState !== SKU);
       return removedFromDelete;
     });
-  };
+  }, []);
 
   const productsContext = {
     products: products,
